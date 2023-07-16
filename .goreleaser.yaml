@@ -10,6 +10,17 @@ builds:
       - linux
       - windows
       - darwin
+nfpms:
+    - package_name: sileo
+      homepage: https://github.com/theprojectafrica/sileo
+      maintainer: The Project Africa <theprojectafrica@proton.me>
+      description: Sileo Installer. Automatic Golang Project Rebuilder.
+      formats:
+          - rpm
+          - deb
+
+sboms:
+    - artifacts: archive
 
 archives:
   - format: tar.gz
