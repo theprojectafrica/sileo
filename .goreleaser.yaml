@@ -2,7 +2,7 @@
 before:
   hooks:
     - go mod tidy
-    - go generate ./...
+    - go mod download
 builds:
   - env:
       - CGO_ENABLED=0
@@ -21,6 +21,22 @@ nfpms:
 
 sboms:
     - artifacts: archive
+
+dockers:
+  - image_templates: [ "ghcr.io/theprojectafrica/{{ .ProjectName }}:{{ .Version }}" ]
+    goos: linux
+    goarch: amd64
+    use: buildx
+    build_flag_templates:
+      - --platform=linux/amd64
+      - --label=org.opencontainers.image.title={{ .ProjectName }}
+      - --label=org.opencontainers.image.description={{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/theprojectafrica/sileo
+      - --label=org.opencontainers.image.source=https://github.com/theprojectafrica/sileo
+      - --label=org.opencontainers.image.version={{ .Version }}
+      - --label=org.opencontainers.image.created={{ .Date }}
+      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+      - --label=org.opencontainers.image.licenses=MIT
 
 archives:
   - format: tar.gz
